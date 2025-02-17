@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Agenda</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calendario Agenda</h1>
+        <div class="calendar-controls">
+            <button id="prevMonth">&lt; Mes Anterior</button>
+            <span id="currentMonthYear">Febrero 2023</span>
+            <button id="nextMonth">Mes Siguiente &gt;</button>
+        </div>
+        <!-- Días de la semana -->
+        <div class="day-names">
+            <div class="day-name">Lunes</div>
+            <div class="day-name">Martes</div>
+            <div class="day-name">Miércoles</div>
+            <div class="day-name">Jueves</div>
+            <div class="day-name">Viernes</div>
+            <div class="day-name">Sábado</div>
+            <div class="day-name">Domingo</div>
+        </div>
+        <!-- Días del mes se generan dinámicamente aquí -->
+        <div id="calendar"></div>
+    </div>
+
+    <!-- Modal para agregar/editar actividad -->
+    <div id="activityModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Añadir Actividad</h2>
+            <form id="activityForm">
+                <label for="activityName">Nombre de la Actividad:</label>
+                <input type="text" id="activityName" required>
+                
+                <label for="activityDescription">Descripción:</label>
+                <textarea id="activityDescription" required></textarea>
+                
+                <label for="activityTime">Hora:</label>
+                <input type="time" id="activityTime" required>
+
+                <label for="activityCompleted">Completada:</label>
+                <input type="checkbox" id="activityCompleted">
+                
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles de la actividad -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="detailTitle">Detalles de la Actividad</h2>
+            <p><strong>Nombre:</strong> <span id="detailName"></span></p>
+            <p><strong>Descripción:</strong> <span id="detailDescription"></span></p>
+            <p><strong>Hora:</strong> <span id="detailTime"></span></p>
+            <p><strong>Completada:</strong> <span id="detailCompleted"></span></p>
+            <button id="editActivity">Editar</button>
+            <button id="deleteActivity">Eliminar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
