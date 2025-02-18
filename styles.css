@@ -292,3 +292,54 @@ button[type="submit"]:hover {
 #prevMonth, #nextMonth {
     font-size: 30px; 
 }
+
+/* Estilos para la página de tareas */
+.task-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.task-item {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.task-item.expired {
+    border-left: 5px solid #cf6679;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.task-header h3 {
+    margin: 0;
+    color: #bb86fc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task-header span {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.expired-label {
+    color: #cf6679;
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.task-item p {
+    margin: 0;
+    color: #ddd;
+    font-size: 0.95em;
+}
