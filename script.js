@@ -222,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===================== BOTONES DE EDICIÓN/ELIMINACIÓN =====================
     editActivityButton.addEventListener('click', () => {
         openEditModal(selectedActivity);
+        detailModal.style.display = 'none';
     });
 
     deleteActivityButton.addEventListener('click', async () => {

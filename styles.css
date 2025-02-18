@@ -33,6 +33,7 @@ h1 {
     transition: background-color 0.3s ease;
     margin-bottom: 20px;
     text-decoration: none;
+    width: 96px;
 }
 
 .pending-tasks-button:hover {
@@ -281,4 +282,13 @@ button[type="submit"]:hover {
     .calendar-controls button {
         padding: 10px;
     }
+}
+
+#currentMonthYear {
+    font-size: 24px;
+    font-weight: bold; 
+}
+
+#prevMonth, #nextMonth {
+    font-size: 30px; 
 }
