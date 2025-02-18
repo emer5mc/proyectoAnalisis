@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevMonthButton = document.getElementById('prevMonth');
     const nextMonthButton = document.getElementById('nextMonth');
     const activityModal = document.getElementById('activityModal');
+    const editModal = document.getElementById('editModal');
     const detailModal = document.getElementById('detailModal');
     const activityForm = document.getElementById('activityForm');
+    const editForm = document.getElementById('editForm');
     const detailName = document.getElementById('detailName');
     const detailDescription = document.getElementById('detailDescription');
     const detailTime = document.getElementById('detailTime');
@@ -58,6 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
             day.classList.add('day');
             day.innerHTML = `<h3>${i}</h3>`;
             day.addEventListener('click', () => openActivityModal(i));
+
+            // Resaltar el día actual
+            const today = new Date();
+            if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                day.classList.add('today');
+            }
 
             const key = `${year}-${month + 1}-${i}`;
             if (activities[key]) {
@@ -142,6 +150,15 @@ document.addEventListener('DOMContentLoaded', function () {
         activityModal.style.display = 'block';
     }
 
+    function openEditModal(activity) {
+        selectedActivity = activity;
+        document.getElementById('editName').value = activity.name;
+        document.getElementById('editDescription').value = activity.description;
+        document.getElementById('editTime').value = activity.time;
+        document.getElementById('editCompleted').checked = activity.completed === "1";
+        editModal.style.display = 'block';
+    }
+
     function openDetailModal(activity, key) {
         selectedActivity = { ...activity, key };
         detailName.textContent = activity.name;
@@ -155,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.close').forEach(closeButton => {
         closeButton.addEventListener('click', () => {
             activityModal.style.display = 'none';
+            editModal.style.display = 'none';
             detailModal.style.display = 'none';
         });
     });
@@ -181,37 +199,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // ===================== BOTONES DE EDICIÓN/ELIMINACIÓN =====================
-    editActivityButton.addEventListener('click', async () => {
-        activityModal.style.display = 'block';
-        detailModal.style.display = 'none';
-
-        // Llenar formulario con datos existentes
-        document.getElementById('activityName').value = selectedActivity.name;
-        document.getElementById('activityDescription').value = selectedActivity.description;
-        document.getElementById('activityTime').value = selectedActivity.time;
-        document.getElementById('activityCompleted').checked = selectedActivity.completed === "1";
-
-        // Actualizar actividad al guardar
-        activityForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const updatedActivity = {
-                ...selectedActivity,
-                name: document.getElementById('activityName').value,
-                description: document.getElementById('activityDescription').value,
-                time: document.getElementById('activityTime').value,
-                completed: document.getElementById('activityCompleted').checked ? "1" : "0"
-            };
-
-            const success = await updateActivityInFirebase(updatedActivity);
-            if (success) {
-                const index = activities[selectedActivity.key].findIndex(a => a.id === selectedActivity.id);
-                activities[selectedActivity.key][index] = updatedActivity;
-                generateCalendar();
-                activityModal.style.display = 'none';
-                activityForm.reset();
-            }
+    editForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const updatedActivity = {
+            ...selectedActivity,
+            name: document.getElementById('editName').value,
+            description: document.getElementById('editDescription').value,
+            time: document.getElementById('editTime').value,
+            completed: document.getElementById('editCompleted').checked ? "1" : "0"
         };
+
+        const success = await updateActivityInFirebase(updatedActivity);
+        if (success) {
+            const index = activities[selectedActivity.key].findIndex(a => a.id === selectedActivity.id);
+            activities[selectedActivity.key][index] = updatedActivity;
+            generateCalendar();
+            editModal.style.display = 'none';
+            editForm.reset();
+        }
+    });
+
+    // ===================== BOTONES DE EDICIÓN/ELIMINACIÓN =====================
+    editActivityButton.addEventListener('click', () => {
+        openEditModal(selectedActivity);
     });
 
     deleteActivityButton.addEventListener('click', async () => {

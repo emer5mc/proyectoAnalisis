@@ -21,6 +21,24 @@ h1 {
     color: #bb86fc;
 }
 
+.pending-tasks-button {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #bb86fc;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.pending-tasks-button:hover {
+    background-color: #9a67ea;
+}
+
 .calendar-controls {
     display: flex;
     justify-content: space-between;
@@ -46,11 +64,10 @@ h1 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
-    max-height: 340px; /* Altura máxima para habilitar el scroll */
-    overflow-y: auto; /* Habilitar scroll vertical */
-    padding-top: 10px; /* Espacio para los días de la semana */
+    max-height: 340px;
+    overflow-y: auto;
+    padding-top: 10px;
     position: relative;
-
 }
 
 /* Días de la semana */
@@ -85,6 +102,15 @@ h1 {
 .day:hover {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(187, 134, 252, 0.5);
+}
+
+.day.today {
+    background-color: #bb86fc;
+    color: #121212;
+}
+
+.day.today h3 {
+    color: #121212;
 }
 
 .day h3 {
@@ -165,7 +191,7 @@ h1 {
     }
 }
 
-/* Formulario */
+/* Formularios */
 form {
     display: flex;
     flex-direction: column;
@@ -225,22 +251,34 @@ button[type="submit"]:hover {
     background-color: #9a67ea;
 }
 
-/* Personalización de la barra de scroll */
+/* Scrollbar */
 #calendar::-webkit-scrollbar {
-    width: 19px; /* Ancho de la barra de scroll */
+    width: 12px;
 }
 
 #calendar::-webkit-scrollbar-track {
-    background: #2c2c2c; /* Color de fondo de la pista */
-    border-radius: 10px; /* Bordes redondeados */
+    background: #2c2c2c;
+    border-radius: 10px;
 }
 
 #calendar::-webkit-scrollbar-thumb {
-    background: #bb86fc; /* Color del thumb (barra deslizante) */
-    border-radius: 10px; /* Bordes redondeados */
-    border: 3px solid #2c2c2c; /* Borde para que combine con el fondo */
+    background: #bb86fc;
+    border-radius: 10px;
+    border: 3px solid #2c2c2c;
 }
 
 #calendar::-webkit-scrollbar-thumb:hover {
-    background: #9a67ea; /* Color del thumb al pasar el mouse */
+    background: #9a67ea;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .day {
+        padding: 10px;
+        min-height: 80px;
+    }
+    
+    .calendar-controls button {
+        padding: 10px;
+    }
 }
